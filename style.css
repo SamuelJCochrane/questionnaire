@@ -1,0 +1,31 @@
+body {
+  background-color: #efefef;
+}
+footer {
+  height: 90px;
+  background-color: grey;
+}
+p {
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.3em;
+}
+.main div {
+  padding-top: 30px;
+}
+.jumbotron{
+  margin: 0;
+  background-color: #efefef;
+  height: 145px;
+}
+.row.content {
+  height:		600px;
+}
+.main {
+  background-color: white;
+  height: 100%;
+  padding: 0 0 0 0;
+}
+.side {
+  background-color: #efefef;
+  height: 100%;
+}
