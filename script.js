@@ -60,7 +60,7 @@ function secondStage() {
 		fourthQ	= document.getElementById('3'),
 		fifthQ	= document.getElementById('4');
 
-	var firstQChild 	= "<select id='age-range'><option value='blank'></option><option value='15-19'>15-19</option><option value='20-29'>20-29</option><option value='30-39'>30-39</option><option value='40-49'>40-49</option><option value='50+'>50+</option></select>",
+	var firstQChild 	= "<select id='agerange'><option value='blank'></option><option value='15-19'>15-19</option><option value='20-29'>20-29</option><option value='30-39'>30-39</option><option value='40-49'>40-49</option><option value='50+'>50+</option></select>",
 		secondQChild 	= "<select id='qualification'><option value='blank'></option><option value='High School'>High School</option><option value='Undergraduate Degree'>Undergraduate Degree</option><option value='Postgraduate Degree'>Postgraduate Degree</option></select>",
 		thirdQChild 	= "<select id='english'><option value='blank'></option><option value='Yes'>Yes</option><option value='No'>No</option></select>",
 		fourthQChild	= "<select id='employment'><option value='blank'></option><option value='Full Time'>Full Time</option><option value='Part Time'>Part Time</option><option value='Unemployed'>Unemployed</option></select>",
@@ -108,19 +108,25 @@ function lastStage(){
 };
 var nextButton = document.getElementById('nextButton');
 
-var firstQuestionsIDs = ['age-range', 'qualification', 'english', 'employment', 'areaofwork'],
+var firstQuestionsIDs = ['agerange', 'qualification', 'english', 'employment', 'areaofwork'],
 	secondQuestionsIDs = ['own', 'amount', 'timebitcoins', 'othercrypto', 'othercryptoname'];
 
 var grabAnswers = function(index, ids) {
-	var qs = ['q1 option:selected', 'q2 option:selected', 'q3 option:selected', 'q4 option:selected', 'q5 option:selected'];
+	var qs = ['q1', 'q2', 'q3', 'q4', 'q5'];
 	qs.forEach(function(e, i) {
-		answers[index][e] = document.getElementById(ids[i]).value;
+		answers[index][e] = document.getElementById(ids[i]).options.selectedIndex;
 	})
 }
 
-var firstToSecondStage = function () {removeStage(); secondStage(); nextButton.removeEventListener('click', firstToSecondStage); nextButton.addEventListener('click', secondToThirdStage); grabAnswers(0, firstQuestionsIDs);},
-	secondToThirdStage = function () {removeStage(); thirdStage(); nextButton.removeEventListener('click', secondToThirdStage); nextButton.addEventListener('click', thirdToLastStage)},
-	thirdToLastStage = function () {removeStage(); lastStage(); nextButton.removeEventListener('click', thirdToLastStage); alert(answers[0].q4)};
+var removeButton = function () {
+
+	nextButton.parentNode.removeChild(nextButton);
+}
+
+var firstToSecondStage = function () {removeStage(); secondStage(); nextButton.removeEventListener('click', firstToSecondStage); nextButton.addEventListener('click', secondToThirdStage); },
+	secondToThirdStage = function () {grabAnswers(0, firstQuestionsIDs); removeStage(); thirdStage(); nextButton.removeEventListener('click', secondToThirdStage); nextButton.addEventListener('click', thirdToLastStage); },
+	thirdToLastStage = function () {grabAnswers(1, secondQuestionsIDs); removeStage(); lastStage(); nextButton.removeEventListener('click', thirdToLastStage); removeButton()};
 
 firstStage();
 nextButton.addEventListener('click', firstToSecondStage);
+
